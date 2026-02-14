@@ -9,12 +9,28 @@ app.use(express.static(__dirname));
 // Middleware pour parser JSON
 app.use(express.json());
 
-const uri = 'mongodb://localhost:27017';
+// Configuration via variables d'environnement
+const PORT = process.env.PORT || 3000;
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const DB_NAME = process.env.MONGODB_DB || 'olive_grove';
 let mongoClient = null;
 let isMongoConnected = false;
+const startTime = Date.now();
 
 // Cache pour les prédictions
 const predictionCache = new Map();
+
+// Health check endpoint
+app.get('/health', async (req, res) => {
+  const uptimeSeconds = Math.floor((Date.now() - startTime) / 1000);
+  const mongoStatus = isMongoConnected ? 'connected' : 'disconnected';
+  res.json({
+    status: 'ok',
+    uptime: uptimeSeconds,
+    mongodb: mongoStatus,
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Fonction pour se connecter à MongoDB
 async function connectMongoDB() {
@@ -48,7 +64,7 @@ app.post('/data', async (req, res) => {
       try {
         const client = await connectMongoDB();
         if (client) {
-          const db = client.db('olive_grove');
+          const db = client.db(DB_NAME);
           const collection = db.collection('sensor_data');
           await collection.insertOne({
             ...req.body,
@@ -91,7 +107,7 @@ app.get('/latest-data', async (req, res) => {
     const client = await connectMongoDB();
     if (client) {
       try {
-        const db = client.db('olive_grove');
+        const db = client.db(DB_NAME);
         const collection = db.collection('sensor_data');
         sensorData = await collection.findOne({}, { sort: { _id: -1 } });
         
@@ -125,7 +141,7 @@ app.get('/history', async (req, res) => {
     const client = await connectMongoDB();
     if (client) {
       try {
-        const db = client.db('olive_grove');
+        const db = client.db(DB_NAME);
         const collection = db.collection('sensor_data');
         
         // Récupérer les dernières données SANS prédictions - trop lent!
@@ -260,10 +276,11 @@ function callMLModel(sensorData) {
   });
 }
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log('========================================');
-  console.log('API prête sur le port 3000');
-  console.log('Ouvre http://localhost:3000 dans ton navigateur');
+  console.log(`API prête sur le port ${PORT}`);
+  console.log(`Ouvre http://localhost:${PORT} dans ton navigateur`);
+  console.log(`Health check: http://localhost:${PORT}/health`);
   console.log('Modèle ML intégré et prêt');
   console.log('========================================');
 });

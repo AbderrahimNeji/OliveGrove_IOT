@@ -1,82 +1,100 @@
-🌳 SMART OLIVE GROVE - v2.0 AVEC ML INTÉGRÉ
+# Smart Olive Grove
 
-══════════════════════════════════════════════════════════════
+IoT monitoring system for olive groves using Arduino sensors and machine learning predictions.
 
-📊 COMPOSANTS:
-==============
-✓ Backend Node.js (server.js)      - API + gestion requêtes
-✓ Frontend JavaScript (script.js)  - Interface + Web Serial API
-✓ Modèle ML Python (ml_api.py)    - Prédictions d'état
-✓ Interface Web (index.html)       - Dashboard
-✓ Styles (style.css)              - Design réactif
-✓ Arduino (sketch_nov3a.ino)       - Capteurs temps réel
+## Overview
 
-══════════════════════════════════════════════════════════════
+This project connects to Arduino sensors via the Web Serial API to collect real-time environmental data (soil moisture, temperature, rainfall) and uses a Random Forest ML model to predict olive tree health status and recommend actions.
 
-🚀 DÉMARRAGE RAPIDE:
-====================
+## Components
 
-1. Lancez le serveur:
-   → Double-cliquez start.bat (Windows)
-   ou lancez: npm install && node server.js
+| Component | File | Description |
+|-----------|------|-------------|
+| Backend | `server.js` | Express API server with MongoDB integration |
+| Frontend | `index.html`, `script.js`, `style.css` | Dashboard with Web Serial API |
+| ML Model | `ml_api.py` | Python prediction API (Random Forest) |
+| Arduino | `arduino_code/sketch_nov3a.ino` | Sensor data collection firmware |
 
-2. Ouvrez l'interface:
-   → http://localhost:3000
+## Quick Start
 
-3. Connectez Arduino:
-   → Cliquez "Connecter Arduino"
-   → Sélectionnez le port COM
+### Prerequisites
 
-4. Observez les prédictions!
-   → Les données s'affichent en temps réel
-   → Les prédictions ML apparaissent automatiquement
-   → Consultez les recommandations
+- [Node.js](https://nodejs.org/) (v18+)
+- [Python 3](https://www.python.org/) with `pandas`, `scikit-learn`, `joblib`
+- [MongoDB](https://www.mongodb.com/) (optional, for data persistence)
+- Chrome or Edge browser (Web Serial API support)
 
-══════════════════════════════════════════════════════════════
+### Installation
 
-✨ FONCTIONNALITÉS:
-===================
+```bash
+git clone https://github.com/AbderrahimNeji/OliveGrove_IOT.git
+cd OliveGrove_IOT
+npm install
+```
 
-✓ Lecture données Arduino en temps réel
-✓ Web Serial API pour connexion directe
-✓ Prédiction ML automatique
-✓ Affichage prédictions et recommandations
-✓ Gestion des états (Sain, Stress, Risque, etc)
-✓ Sauvegarde MongoDB (optionnel)
-✓ Design responsive et intuitif
+### Configuration
 
-══════════════════════════════════════════════════════════════
+Copy `.env.example` to `.env` and adjust values if needed:
 
-🤖 PRÉDICTIONS ML:
-==================
+```bash
+cp .env.example .env
+```
 
-Le modèle prédit l'état de l'olivier:
-- 🌳 Sain: L'olivier va bien
-- 💧 Stress Hydrique: Besoin d'eau
-- 🌡️ Stress Chaleur: Trop chaud
-- 🍄 Risque Fongique: Trop d'humidité
-- 🚨 Maladie Grave: Urgence
+### Running
 
-Avec des actions recommandées adaptées!
+```bash
+# Using npm
+npm start
 
-══════════════════════════════════════════════════════════════
+# Or on Windows
+start.bat
+```
 
-📋 FICHIERS ESSENTIELS:
-=======================
+Then open [http://localhost:3000](http://localhost:3000) in Chrome/Edge.
 
-src/
-├── server.js        - Backend Express + ML
-├── script.js        - Frontend + Web Serial
-├── ml_api.py        - API prédictions Python
-├── index.html       - Interface HTML
-├── style.css        - Styles CSS
-└── start.bat        - Démarrage Windows
+### Connect Arduino
 
-ml/
-└── Modèles ML (joblib)
+1. Click **"Connecter Arduino"**
+2. Select the COM port for your board
+3. Real-time data and ML predictions will appear automatically
+
+## ML Predictions
+
+The model predicts olive tree status based on weather conditions:
+
+| Status | Description |
+|--------|-------------|
+| Sain | Tree is healthy |
+| Stress Hydrique | Water stress detected |
+| Stress Chaleur | Heat stress detected |
+| Risque Fongique | Fungal risk (high humidity) |
+| Maladie Grave | Severe disease alert |
+
+See the [ML model documentation](Créer%20un%20modèle%20pour%20prédire%20l'état%20des%20arbres%20d'olives/ml/Modèle%20de%20Prédiction%20pour%20l'Olivier%20(Olive%20Tree%20Predictor%20Model).md) for details on training and prediction rules.
+
+## Project Structure
+
+```
+├── server.js                  # Express backend + ML bridge
+├── index.html                 # Dashboard UI
+├── script.js                  # Frontend logic + Web Serial
+├── style.css                  # Responsive styles
+├── ml_api.py                  # Python ML prediction script
+├── start.bat / start.ps1      # Windows startup scripts
+├── arduino_code/
+│   └── sketch_nov3a.ino       # Arduino sensor firmware
+└── Créer un modèle.../ml/
     ├── olive_tree_predictor_model.joblib
     ├── target_encoders.joblib
-    └── feature_names.txt
+    ├── feature_names.txt
+    ├── train_model.py
+    ├── predict.py
+    └── generate_synthetic_data.py
+```
+
+## License
+
+MIT
 
 arduino/
 └── sketch_nov3a.ino - Code Arduino

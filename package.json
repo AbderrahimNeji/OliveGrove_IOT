@@ -1,4 +1,14 @@
 {
+  "name": "smart-olive-grove",
+  "version": "2.0.0",
+  "description": "IoT monitoring system for olive groves with Arduino sensors and ML predictions",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["iot", "arduino", "olive", "agriculture", "machine-learning"],
+  "license": "MIT",
   "dependencies": {
     "express": "^5.1.0",
     "mongodb": "^7.0.0"
