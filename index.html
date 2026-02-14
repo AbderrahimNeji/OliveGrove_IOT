@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Olive Grove - Lecteur Arduino</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <header class="header">
+            <h1>🌳 Smart Olive Grove</h1>
+            <p>Lecteur de Données Arduino en Temps Réel</p>
+        </header>
+
+        <!-- Section de Connexion -->
+        <section class="connection-section">
+            <h2>Connexion Arduino</h2>
+            <div class="connection-controls">
+                <button id="connectBtn" class="btn btn-primary">Connecter Arduino</button>
+                <button id="disconnectBtn" class="btn btn-secondary" disabled>Déconnecter</button>
+                <span id="connectionStatus" class="status-indicator offline">Déconnecté</span>
+            </div>
+        </section>
+
+        <!-- Section Données en Temps Réel -->
+        <section class="data-section">
+            <h2>Données en Temps Réel</h2>
+            <div class="sensors-grid">
+                <!-- Humidité du Sol -->
+                <div class="sensor-card">
+                    <div class="sensor-icon">💧</div>
+                    <h3>Humidité du Sol</h3>
+                    <div class="sensor-value" id="soilPct">0%</div>
+                    <div class="sensor-raw">Valeur brute: <span id="soilRaw">0</span></div>
+                </div>
+
+                <!-- Température -->
+                <div class="sensor-card">
+                    <div class="sensor-icon">🌡️</div>
+                    <h3>Température</h3>
+                    <div class="sensor-value" id="tempC">0°C</div>
+                    <div class="sensor-raw">Capteur DS18B20</div>
+                </div>
+
+                <!-- Humidité de Pluie -->
+                <div class="sensor-card">
+                    <div class="sensor-icon">🌧️</div>
+                    <h3>Humidité de Pluie</h3>
+                    <div class="sensor-value" id="rainPct">0%</div>
+                    <div class="sensor-raw">Valeur brute: <span id="rainRaw">0</span></div>
+                </div>
+
+                <!-- Détection de Pluie -->
+                <div class="sensor-card">
+                    <div class="sensor-icon">☔</div>
+                    <h3>Détection de Pluie</h3>
+                    <div class="sensor-value" id="rainDO">--</div>
+                    <div class="sensor-raw">Capteur Numérique</div>
+                </div>
+            </div>
+
+            <!-- Dernière mise à jour -->
+            <div class="last-update">
+                Dernière mise à jour: <span id="lastUpdate">--:--:--</span>
+            </div>
+        </section>
+
+        <!-- Section Prédiction du Modèle ML -->
+        <section class="prediction-section">
+            <h2>🤖 Prédiction IA - État de l'Olivier</h2>
+            <div id="predictionContainer" class="prediction-container">
+                <p class="prediction-placeholder">Connectez Arduino et les prédictions s'afficheront ici...</p>
+            </div>
+        </section>
+
+        <!-- Section Historique -->
+        <section class="history-section">
+            <h2>📊 Historique - Dernières 24 Heures</h2>
+            <div class="history-controls">
+                <button id="refreshHistoryBtn" class="btn btn-primary">Actualiser l'Historique</button>
+            </div>
+            <div id="historyContainer" class="history-container">
+                <p class="history-placeholder">Historique sera affiché ici...</p>
+            </div>
+        </section>
+
+        <!-- Section Logs -->
+        <section class="logs-section">
+            <h2>Journal des Données</h2>
+            <div class="logs-controls">
+                <button id="clearLogsBtn" class="btn btn-secondary">Effacer le Journal</button>
+            </div>
+            <div id="logsContainer" class="logs-container">
+                <p class="log-entry">En attente de connexion...</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="server.js"></script>
+</body>
+</html>
