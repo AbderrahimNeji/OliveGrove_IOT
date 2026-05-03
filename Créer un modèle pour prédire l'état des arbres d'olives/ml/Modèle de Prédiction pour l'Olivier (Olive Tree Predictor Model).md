@@ -44,10 +44,6 @@ Le script `predict.py` contient la logique pour charger le modèle et faire des 
 
 Vous pouvez l'exécuter directement pour voir un exemple de prédiction :
 
-```bash
-python3 predict.py
-```
-
 **Pour appliquer le modèle sur vos propres données :**
 
 1.  Assurez-vous que vos nouvelles données sont dans un format `pandas.DataFrame` avec les colonnes d'entrée suivantes :
