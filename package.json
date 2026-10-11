@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "test": "node --test sensor-data.test.js"
   },
   "keywords": ["iot", "arduino", "olive", "agriculture", "machine-learning"],
   "license": "MIT",
